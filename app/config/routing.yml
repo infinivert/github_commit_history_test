@@ -1,3 +1,7 @@
+infinivert_git_hub_commit_history_test:
+    resource: "@InfinivertGitHubCommitHistoryTestBundle/Resources/config/routing.yml"
+    prefix:   /
+
 app:
     resource: "@AppBundle/Controller/"
     type:     annotation
