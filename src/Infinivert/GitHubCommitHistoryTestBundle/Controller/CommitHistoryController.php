@@ -17,14 +17,19 @@ class CommitHistoryController extends Controller
      */
     public function indexAction()
     {
-        // Ensure that the API is available
-        if (empty($this->GitHub)) $this->setApi();
+        try {
+            // Ensure that the API is available
+            if (empty($this->GitHub)) $this->setApi();
 
-        // Assemble the data
-        $data = $this->compileStats($this->organization);
+            // Assemble the data
+            $data = $this->compileStats($this->organization);
 
-        //Pass results to appropriate view
-        return $this->render('InfinivertGitHubCommitHistoryTestBundle:CommitHistory:index.html.twig');
+            //Pass results to appropriate view
+            return $this->render('InfinivertGitHubCommitHistoryTestBundle:CommitHistory:index.html.twig',$data);
+        } catch (Exception $e) {
+            //Pass exception to appropriate view
+            return $this->render('InfinivertGitHubCommitHistoryTestBundle:CommitHistory:error.html.twig',array('error',$e));
+        }
     }
 
     /**
@@ -35,6 +40,9 @@ class CommitHistoryController extends Controller
     {
         // Get user configuration from config.yml
         $this->organization = $this->container->getParameter('organization');
+        if (empty($this->organization)) throw new \Exception("Organization name is required. Please add an organization to /src/Infinivert/GitHubCommitHistoryTestBundle/Resources/config/config.yml");
+        
+
         $this->username = $this->container->getParameter('username');
         $this->password = $this->container->getParameter('password');
 
@@ -56,6 +64,8 @@ class CommitHistoryController extends Controller
         if (!$until) $until = date('Y-m-d\TH:i:sP');
 
         $data = array();
+
+        $data['organization'] = $organization;
 
         $data['repos'] = $this->getOrgRepos($organization);
 
@@ -80,7 +90,7 @@ class CommitHistoryController extends Controller
             $data['totals']['deletions'] += $data['repos'][$id]['deletions'];
             
         }
-        exit('<pre>'.print_r($data,TRUE).'</pre>');
+        return $data;
     }
 
     /**
