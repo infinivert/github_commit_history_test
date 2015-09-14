@@ -22,6 +22,10 @@ class InfinivertGitHubCommitHistoryTestExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
+        $container->setParameter('organization',$config['organization']);
+        $container->setParameter('username',$config['username']);
+        $container->setParameter('password',$config['password']);
+
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
     }
