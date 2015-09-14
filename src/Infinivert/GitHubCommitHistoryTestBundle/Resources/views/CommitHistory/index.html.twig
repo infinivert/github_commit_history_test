@@ -1,0 +1,47 @@
+{{ include("InfinivertGitHubCommitHistoryTestBundle:Shared:head.html.twig") }}
+{{ include("InfinivertGitHubCommitHistoryTestBundle:Shared:body.html.twig") }}
+<h1>This month's stats for <a href="https://github.com/{{ organization }}">{{ organization }}</a></h1>
+
+<h2>By Repository:</h2>
+
+<div class="repos">
+{% for repo in repos %}
+	<div class="row">
+		<div class="col-xs-12">
+			<h3><a href="https://github.com/{{ repo.owner }}/{{ repo.name }}">{{ repo.name }}</a></h3>
+		</div>
+		<div class="col-sm-4">
+			<h5>Commits</h5>
+			<h4>{{ repo.commits }}</h4>
+		</div>
+		<div class="col-sm-4">
+			<h5>Additions</h5>
+			<h4>{{ repo.additions }}</h4>
+		</div>
+		<div class="col-sm-4">
+			<h5>Deletions</h5>
+			<h4>{{ repo.deletions }}</h4>
+		</div>
+	</div>
+{% endfor %}
+</div>
+
+<div class="row total">
+	<div class="col-xs-12">
+		<h2>Totals:</h2>
+	</div>
+	<div class="col-sm-4">
+		<h5>Commits</h5>
+		<h3>{{ totals.commits }}</h3>
+	</div>
+	<div class="col-sm-4">
+		<h5>Additions</h5>
+		<h3>{{ totals.additions }}</h3>
+	</div>
+	<div class="col-sm-4">
+		<h5>Deletions</h5>
+		<h3>{{ totals.deletions }}</h3>
+	</div>
+</div>
+
+{{ include("InfinivertGitHubCommitHistoryTestBundle:Shared:foot.html.twig") }}
