@@ -2,3 +2,9 @@ services:
 #    infinivert_git_hub_commit_history_test.example:
 #        class: Infinivert\GitHubCommitHistoryTestBundle\Example
 #        arguments: [@service_id, "plain_value", %parameter%]
+    github_api:
+        class:     Github\Client
+
+    # infinivert.commit_history_test:
+    #     class:     Infinivert\GitHubCommitHistoryTestBundle\Controller\CommitHistoryController
+    #     arguments: ["@github_api"]
